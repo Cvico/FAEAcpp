@@ -33,7 +33,10 @@
 
 class AnalysisFAEA {
   
- public:
+  public:
+  TTree			*fChain;
+  int			fCurrent;
+  //Declaration of leaves types
   int			NJet;			     
   float			Jet_Px;			     
   float			Jet_Py;			     
@@ -91,58 +94,58 @@ class AnalysisFAEA {
   //List of branches
 
 
-  TBranch	       *NJet;			                  //!			    
-  TBranch	       *Jet_Px;			   	     //!
-  TBranch	       *Jet_Py;			   	     //!
-  TBranch	       *Jet_Pz;			   	     //!
-  TBranch	       *Jet_E;			   	     //!
-  TBranch	       *Jet_btag;		   	     //!
-  TBranch	       *Jet_ID;			   	     //!
-  TBranch	       *NMuon;			   	     //!
-  TBranch	       *Muon_Px;		   	     //!
-  TBranch	       *Muon_Py;		   	     //!
-  TBranch	       *Muon_Pz;		   	     //!
-  TBranch	       *Muon_E;			   	     //!
-  TBranch	       *Muon_Charge;		   	     //!
-  TBranch	       *Muon_Iso;		   	     //!
-  TBranch	       *NElectron;		   	     //!
-  TBranch	       *Electron_Px;		   	     //!
-  TBranch	       *Electron_Py;		   	     //!
-  TBranch	       *Electron_Pz;		   	     //!
-  TBranch	       *Electron_E;		   	     //!
-  TBranch	       *Electron_Charge;	   	     //!
-  TBranch	       *Electron_Iso;		   	     //!
-  TBranch	       *NPhoton;		   	     //!
-  TBranch	       *Photon_Px;		   	     //!
-  TBranch	       *Photon_Py;		   	     //!
-  TBranch	       *Photon_Pz;		   	     //!
-  TBranch	       *Photon_E;		   	     //!
-  TBranch	       *Photon_Charge;		   	     //!
-  TBranch	       *Photon_Iso;		   	     //!
-  TBranch	       *MET_px;			        //!
-  TBranch	       *Met_py;			        //!
-  TBranch	       *MChadronicBottom_px;	        //!
-  TBranch	       *MChadronicBottom_py;	        //!
-  TBranch	       *MChadronicBottom_pz;	        //!
-  TBranch	       *MCleptonicBottom_px;	        //!
-  TBranch	       *MCleptonicBottom_py;	        //!
-  TBranch	       *MCleptonicBottom_pz;	        //!
-  TBranch	       *MChadronicWDecayQuark_px;       //!
-  TBranch	       *MChadronicWDecayQuark_py;       //!
-  TBranch	       *MChadronicWDecayQuark_pz;       //!
-  TBranch	       *MChadronicWDecayQuarkBar_px     //!
-  TBranch	       *MChadronicWDecayQuarkBar_py     //!
-  TBranch	       *MChadronicWDecayQuarkBar_pz     //!
-  TBranch	       *MClepton_px;		        //!
-  TBranch	       *MClepton_py;		        //!
-  TBranch	       *MClepton_pz;		        //!
-  TBranch	       *MClepton_PDGid;		        //!
-  TBranch	       *MCneutrino_px;		        //!
-  TBranch	       *MCneutrino_py;		        //!
-  TBranch	       *MCneutrino_pz;		        //!
-  TBranch	       *NPrimaryVertices;	        //!
-  TBranch	       *triggerIsoMu24;		        //!
-  TBranch	       *EventWeight;                      //!
+  TBranch	       *b_NJet;			                  //!			    
+  TBranch	       *b_Jet_Px;			   	     //!
+  TBranch	       *b_Jet_Py;			   	     //!
+  TBranch	       *b_Jet_Pz;			   	     //!
+  TBranch	       *b_Jet_E;			   	     //!
+  TBranch	       *b_Jet_btag;		   	     //!
+  TBranch	       *b_Jet_ID;			   	     //!
+  TBranch	       *b_NMuon;			   	     //!
+  TBranch	       *b_Muon_Px;		   	     //!
+  TBranch	       *b_Muon_Py;		   	     //!
+  TBranch	       *b_Muon_Pz;		   	     //!
+  TBranch	       *b_Muon_E;			   	     //!
+  TBranch	       *b_Muon_Charge;		   	     //!
+  TBranch	       *b_Muon_Iso;		   	     //!
+  TBranch	       *b_NElectron;		   	     //!
+  TBranch	       *b_Electron_Px;		   	     //!
+  TBranch	       *b_Electron_Py;		   	     //!
+  TBranch	       *b_Electron_Pz;		   	     //!
+  TBranch	       *b_Electron_E;		   	     //!
+  TBranch	       *b_Electron_Charge;	   	     //!
+  TBranch	       *b_Electron_Iso;		   	     //!
+  TBranch	       *b_NPhoton;		   	     //!
+  TBranch	       *b_Photon_Px;		   	     //!
+  TBranch	       *b_Photon_Py;		   	     //!
+  TBranch	       *b_Photon_Pz;		   	     //!
+  TBranch	       *b_Photon_E;		   	     //!
+  TBranch	       *b_Photon_Charge;		   	     //!
+  TBranch	       *b_Photon_Iso;		   	     //!
+  TBranch	       *b_MET_px;			        //!
+  TBranch	       *b_Met_py;			        //!
+  TBranch	       *b_MChadronicBottom_px;	        //!
+  TBranch	       *b_MChadronicBottom_py;	        //!
+  TBranch	       *b_MChadronicBottom_pz;	        //!
+  TBranch	       *b_MCleptonicBottom_px;	        //!
+  TBranch	       *b_MCleptonicBottom_py;	        //!
+  TBranch	       *b_MCleptonicBottom_pz;	        //!
+  TBranch	       *b_MChadronicWDecayQuark_px;       //!
+  TBranch	       *b_MChadronicWDecayQuark_py;       //!
+  TBranch	       *b_MChadronicWDecayQuark_pz;       //!
+  TBranch	       *b_MChadronicWDecayQuarkBar_px     //!
+  TBranch	       *b_MChadronicWDecayQuarkBar_py     //!
+  TBranch	       *b_MChadronicWDecayQuarkBar_pz     //!
+  TBranch	       *b_MClepton_px;		        //!
+  TBranch	       *b_MClepton_py;		        //!
+  TBranch	       *b_MClepton_pz;		        //!
+  TBranch	       *b_MClepton_PDGid;		        //!
+  TBranch	       *b_MCneutrino_px;		        //!
+  TBranch	       *b_MCneutrino_py;		        //!
+  TBranch	       *b_MCneutrino_pz;		        //!
+  TBranch	       *b_NPrimaryVertices;	        //!
+  TBranch	       *b_triggerIsoMu24;		        //!
+  TBranch	       *b_EventWeight;                      //!
 
 
 
@@ -166,14 +169,15 @@ class AnalysisFAEA {
 //====================== Method Implementation
 #ifdef AnalysisFAEA_cxx
 AnalysisFAEA::AnalysisFAEA(TTree *tree){
-
-  if (tree == 0) {
-    std::cout << "[ERROR]: No rootfile to be read" << std::endl;
-
-  }
   SetBackgrounds();
+  if (tree == 0) {
+    TChain* chain = new TChain("events", "");
+    for (int i = 0; i < Backgrounds.size(); i++){
+      chain->Add(Backgrounds.at(i) + ".root/events")
+    }
+    tree = chain;
+  }
   Init(tree);
-
 }
 
 AnalysisFAEA::~AnalysisFAEA(){
@@ -219,58 +223,58 @@ void AnalysisFAEA::Init(TTree *tree){
   fCurrent = -1;
   fChain->SetMakeClass(1);
 
-   fChain->SetBranchAddress("NJet",&NJet )
-   fChain->SetBranchAddress("Jet_Px",&Jet_Px )
-   fChain->SetBranchAddress("Jet_Py",&Jet_Py )
-   fChain->SetBranchAddress("Jet_Pz",&Jet_Pz )
-   fChain->SetBranchAddress("Jet_E",&Jet_E )
-   fChain->SetBranchAddress("Jet_btag",& Jet_btag )
-   fChain->SetBranchAddress("Jet_ID",&Jet_ID )
-   fChain->SetBranchAddress("NMuon",&NMuon )
-   fChain->SetBranchAddress("Muon_Px",& Muon_Px )
-   fChain->SetBranchAddress("Muon_Py",& Muon_Py )
-   fChain->SetBranchAddress("Muon_Pz",& Muon_Pz )
-   fChain->SetBranchAddress("Muon_E",&Muon_E )
-   fChain->SetBranchAddress("Muon_Charge",&Muon_Charge )
-   fChain->SetBranchAddress("Muon_Iso",& Muon_Iso )
-   fChain->SetBranchAddress("NElectron",& NElectron) 
-   fChain->SetBranchAddress("Electron_Px",&Electron_Px )
-   fChain->SetBranchAddress("Electron_Py",&Electron_Py )
-   fChain->SetBranchAddress("Electron_Pz",&Electron_Pz )
-   fChain->SetBranchAddress("Electron_E",&Electron_E )
-   fChain->SetBranchAddress("Electron_Charge",& Electron_Charge )
-   fChain->SetBranchAddress("Electron_Iso",&Electron_Iso )
-   fChain->SetBranchAddress("NPhoton",& NPhoton )
-   fChain->SetBranchAddress("Photon_Px",& Photon_Px )
-   fChain->SetBranchAddress("Photon_Py",& Photon_Py )
-   fChain->SetBranchAddress("Photon_Pz",& Photon_Pz )
-   fChain->SetBranchAddress("Photon_E",& Photon_E )
-   fChain->SetBranchAddress("Photon_Charge",&Photon_Charge )
-   fChain->SetBranchAddress("Photon_Iso",&Photon_Iso )
-   fChain->SetBranchAddress("MET_px",&MET_px )
-   fChain->SetBranchAddress("Met_pz",&Met_py )
-   fChain->SetBranchAddress("MChadronicBottom_px",&MChadronicBottom_px )
-   fChain->SetBranchAddress("MChadronicBottom_py",&MChadronicBottom_py )
-   fChain->SetBranchAddress("MChadronicBottom_pz",&MChadronicBottom_pz )
-   fChain->SetBranchAddress("MCleptonicBottom_px",&MCleptonicBottom_px )
-   fChain->SetBranchAddress("MCleptonicBottom_py",&MCleptonicBottom_py )
-   fChain->SetBranchAddress("MCleptonicBottom_pz",&MCleptonicBottom_pz )
-   fChain->SetBranchAddress("MChadronicWDecayQuark_px",&   MChadronicWDecayQuark_px )
-   fChain->SetBranchAddress("MChadronicWDecayQuark_py",&   MChadronicWDecayQuark_py )
-   fChain->SetBranchAddress("MChadronicWDecayQuark_pz",&   MChadronicWDecayQuark_pz )
-   fChain->SetBranchAddress("MChadronicWDecayQuarkBar_px",&   MChadronicWDecayQuarkBar_px )
-   fChain->SetBranchAddress("MChadronicWDecayQuarkBar_py",&   MChadronicWDecayQuarkBar_py )
-   fChain->SetBranchAddress("MChadronicWDecayQuarkBar_pz",& MChadronicWDecayQuarkBar_pz ) 
-   fChain->SetBranchAddress("MClepton_px",&MClepton_px )
-   fChain->SetBranchAddress("MClepton_py",&MClepton_py )
-   fChain->SetBranchAddress("MClepton_pz",&MClepton_pz )
-   fChain->SetBranchAddress("MClepton_PDGid",&MClepton_PDGid )
-   fChain->SetBranchAddress("MCneutrino_px",&MCneutrino_px )
-   fChain->SetBranchAddress("MCneutrino_py",&MCneutrino_py )
-   fChain->SetBranchAddress("MCneutrino_pz",&MCneutrino_pz )
-   fChain->SetBranchAddress("NPrimaryVertices",& NPrimaryVertices )
-   fChain->SetBranchAddress("triggerIsoMu24",&triggerIsoMu24 )
-   fChain->SetBranchAddress("EventWeight",& EventWeight) 
+   fChain->SetBranchAddress("NJet",&NJet )                                                      ;
+   fChain->SetBranchAddress("Jet_Px",&Jet_Px )							;
+   fChain->SetBranchAddress("Jet_Py",&Jet_Py )							;
+   fChain->SetBranchAddress("Jet_Pz",&Jet_Pz )							;
+   fChain->SetBranchAddress("Jet_E",&Jet_E )							;
+   fChain->SetBranchAddress("Jet_btag",& Jet_btag )						;
+   fChain->SetBranchAddress("Jet_ID",&Jet_ID )							;
+   fChain->SetBranchAddress("NMuon",&NMuon )							;
+   fChain->SetBranchAddress("Muon_Px",& Muon_Px )						;
+   fChain->SetBranchAddress("Muon_Py",& Muon_Py )						;
+   fChain->SetBranchAddress("Muon_Pz",& Muon_Pz )						;
+   fChain->SetBranchAddress("Muon_E",&Muon_E )							;
+   fChain->SetBranchAddress("Muon_Charge",&Muon_Charge )					;
+   fChain->SetBranchAddress("Muon_Iso",& Muon_Iso )						;
+   fChain->SetBranchAddress("NElectron",& NElectron) 						;
+   fChain->SetBranchAddress("Electron_Px",&Electron_Px )					;
+   fChain->SetBranchAddress("Electron_Py",&Electron_Py )					;
+   fChain->SetBranchAddress("Electron_Pz",&Electron_Pz )					;
+   fChain->SetBranchAddress("Electron_E",&Electron_E )						;
+   fChain->SetBranchAddress("Electron_Charge",& Electron_Charge )				;
+   fChain->SetBranchAddress("Electron_Iso",&Electron_Iso )					;
+   fChain->SetBranchAddress("NPhoton",& NPhoton )						;
+   fChain->SetBranchAddress("Photon_Px",& Photon_Px )						;
+   fChain->SetBranchAddress("Photon_Py",& Photon_Py )						;
+   fChain->SetBranchAddress("Photon_Pz",& Photon_Pz )						;
+   fChain->SetBranchAddress("Photon_E",& Photon_E )						;
+   fChain->SetBranchAddress("Photon_Charge",&Photon_Charge )					;
+   fChain->SetBranchAddress("Photon_Iso",&Photon_Iso )						;
+   fChain->SetBranchAddress("MET_px",&MET_px )							;
+   fChain->SetBranchAddress("Met_pz",&Met_py )							;
+   fChain->SetBranchAddress("MChadronicBottom_px",&MChadronicBottom_px )			;
+   fChain->SetBranchAddress("MChadronicBottom_py",&MChadronicBottom_py )			;
+   fChain->SetBranchAddress("MChadronicBottom_pz",&MChadronicBottom_pz )			;
+   fChain->SetBranchAddress("MCleptonicBottom_px",&MCleptonicBottom_px )			;
+   fChain->SetBranchAddress("MCleptonicBottom_py",&MCleptonicBottom_py )			;
+   fChain->SetBranchAddress("MCleptonicBottom_pz",&MCleptonicBottom_pz )			;
+   fChain->SetBranchAddress("MChadronicWDecayQuark_px",&   MChadronicWDecayQuark_px )		;
+   fChain->SetBranchAddress("MChadronicWDecayQuark_py",&   MChadronicWDecayQuark_py )		;
+   fChain->SetBranchAddress("MChadronicWDecayQuark_pz",&   MChadronicWDecayQuark_pz )		;
+   fChain->SetBranchAddress("MChadronicWDecayQuarkBar_px",&   MChadronicWDecayQuarkBar_px )	;
+   fChain->SetBranchAddress("MChadronicWDecayQuarkBar_py",&   MChadronicWDecayQuarkBar_py )	;
+   fChain->SetBranchAddress("MChadronicWDecayQuarkBar_pz",& MChadronicWDecayQuarkBar_pz ) 	;
+   fChain->SetBranchAddress("MClepton_px",&MClepton_px )					;
+   fChain->SetBranchAddress("MClepton_py",&MClepton_py )					;
+   fChain->SetBranchAddress("MClepton_pz",&MClepton_pz )					;
+   fChain->SetBranchAddress("MClepton_PDGid",&MClepton_PDGid )					;
+   fChain->SetBranchAddress("MCneutrino_px",&MCneutrino_px )					;
+   fChain->SetBranchAddress("MCneutrino_py",&MCneutrino_py )					;
+   fChain->SetBranchAddress("MCneutrino_pz",&MCneutrino_pz )					;
+   fChain->SetBranchAddress("NPrimaryVertices",& NPrimaryVertices )				;
+   fChain->SetBranchAddress("triggerIsoMu24",&triggerIsoMu24 )					;
+   fChain->SetBranchAddress("EventWeight",& EventWeight)                                        ; 
 
 }
 
