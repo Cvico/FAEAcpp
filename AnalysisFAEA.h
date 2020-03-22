@@ -34,9 +34,11 @@
 class AnalysisFAEA {
   
   public:
+  //================================ Atributes for this class
+  std::vector<TString> Backgrounds{};
   TTree			*fChain;
   int			fCurrent;
-  //Declaration of leaves types
+  //================================Declaration of leaves types
   int			NJet;			     
   float			Jet_Px;			     
   float			Jet_Py;			     
@@ -133,9 +135,9 @@ class AnalysisFAEA {
   TBranch	       *b_MChadronicWDecayQuark_px;       //!
   TBranch	       *b_MChadronicWDecayQuark_py;       //!
   TBranch	       *b_MChadronicWDecayQuark_pz;       //!
-  TBranch	       *b_MChadronicWDecayQuarkBar_px     //!
-  TBranch	       *b_MChadronicWDecayQuarkBar_py     //!
-  TBranch	       *b_MChadronicWDecayQuarkBar_pz     //!
+  TBranch	       *b_MChadronicWDecayQuarkBar_px;     //!
+  TBranch	       *b_MChadronicWDecayQuarkBar_py;     //!
+  TBranch	       *b_MChadronicWDecayQuarkBar_pz;     //!
   TBranch	       *b_MClepton_px;		        //!
   TBranch	       *b_MClepton_py;		        //!
   TBranch	       *b_MClepton_pz;		        //!
@@ -148,9 +150,6 @@ class AnalysisFAEA {
   TBranch	       *b_EventWeight;                      //!
 
 
-
-  //================================ Atributes for this class
-  std::vector<TString> Backgrounds;
   //================================ Method Declaration
   //Constructor
   AnalysisFAEA(TTree *tree = 0);
@@ -164,20 +163,24 @@ class AnalysisFAEA {
   Bool_t Notify();
   void SetBackgrounds();
   void Show(int entry = -1);
+
+
 };
 #endif
 //====================== Method Implementation
 #ifdef AnalysisFAEA_cxx
 AnalysisFAEA::AnalysisFAEA(TTree *tree){
   SetBackgrounds();
+  // std::vector <TString> Backgrounds{"data", "dy"};
   if (tree == 0) {
     TChain* chain = new TChain("events", "");
     for (int i = 0; i < Backgrounds.size(); i++){
-      chain->Add(Backgrounds.at(i) + ".root/events")
+      chain->Add(Backgrounds.at(i) + ".root/events");
     }
     tree = chain;
   }
   Init(tree);
+  Loop();
 }
 
 AnalysisFAEA::~AnalysisFAEA(){
@@ -205,17 +208,20 @@ int AnalysisFAEA::LoadTree(int entry){
   }
   return centry;
 }
-void SetBackgrounds(){
-  this->Backgrounds.push_back("data");
-  this->Backgrounds.push_back("dy");
-  this->Backgrounds.push_back("qcd");
-  this->Backgrounds.push_back("single_top");
-  this->Backgrounds.push_back("ttbar");
-  this->Backgrounds.push_back("wjets");
-  this->Backgrounds.push_back("ww");
-  this->Backgrounds.push_back("wz");
-  this->Backgrounds.push_back("zz");
+
+void AnalysisFAEA::SetBackgrounds(){
+  Backgrounds.push_back("data");
+  Backgrounds.push_back("dy");
+  Backgrounds.push_back("qcd");
+  Backgrounds.push_back("single_top");
+  Backgrounds.push_back("ttbar");
+  Backgrounds.push_back("wjets");
+  Backgrounds.push_back("ww");
+  Backgrounds.push_back("wz");
+  Backgrounds.push_back("zz");
+  return;
 }
+
 void AnalysisFAEA::Init(TTree *tree){
   //Set branch addresses
   if (tree == 0) return;
@@ -281,36 +287,36 @@ void AnalysisFAEA::Init(TTree *tree){
 bool AnalysisFAEA::Notify(){
   //Called when loading a new file.
   //Get branch pointers
-  b_NJet			= fChain->GetBranch("NJet	     	");	        
-  b_Jet_Px     		      	= fChain->GetBranch("Jet_Px     	");	    	    
-  b_Jet_Py     		      	= fChain->GetBranch("Jet_Py     	");	    	    
-  b_Jet_Pz     		      	= fChain->GetBranch("Jet_Pz     	");	        
-  b_Jet_E	     	      	= fChain->GetBranch("Jet_E	     	");	        
-  b_Jet_btag   		      	= fChain->GetBranch("Jet_btag   	");	    
-  b_Jet_ID     		      	= fChain->GetBranch("Jet_ID     	");	    	    
-  b_NMuon	     	      	= fChain->GetBranch("NMuon	     	");	        
-  b_Muon_Px    		      	= fChain->GetBranch("Muon_Px    	");	    
-  b_Muon_Py    		      	= fChain->GetBranch("Muon_Py    	");	    
-  b_Muon_Pz    		      	= fChain->GetBranch("Muon_Pz    	");	    
-  b_Muon_E     		      	= fChain->GetBranch("Muon_E     	");	    	    
-  b_Muon_Charge		      	= fChain->GetBranch("Muon_Charge	");	    
-  b_Muon_Iso   	              	= fChain->GetBranch("Muon_Iso   	");     
-  b_NElectron     	      	= fChain->GetBranch("NElectron     	");
-  b_Electron_Px		      	= fChain->GetBranch("Electron_Px	");	    
-  b_Electron_Py		      	= fChain->GetBranch("Electron_Py	");	    
-  b_Electron_Pz		      	= fChain->GetBranch("Electron_Pz	");	    
-  b_Electron_E 		      	= fChain->GetBranch("Electron_E 	");	    
-  b_Electron_Charge	      	= fChain->GetBranch("Electron_Charge	");
-  b_Electron_Iso	      	= fChain->GetBranch("Electron_Iso	");	        
-  b_NPhoton    		      	= fChain->GetBranch("NPhoton    	");	    
-  b_Photon_Px  		      	= fChain->GetBranch("Photon_Px  	");	    
-  b_Photon_Py  		      	= fChain->GetBranch("Photon_Py  	");	    
-  b_Photon_Pz  		      	= fChain->GetBranch("Photon_Pz  	");	    
-  b_Photon_E   		      	= fChain->GetBranch("Photon_E   	");	    
-  b_Photon_Charge	      	= fChain->GetBranch("Photon_Charge	");	        
-  b_Photon_Iso 		      	= fChain->GetBranch("Photon_Iso 	");	    
-  b_MET_px     		      	= fChain->GetBranch("MET_px     	");	    	    
-  b_Met_py     		      	= fChain->GetBranch("Met_py     	");	    	    
+  b_NJet			= fChain->GetBranch("NJet");	        
+  b_Jet_Px     		      	= fChain->GetBranch("Jet_Px");	    	    
+  b_Jet_Py     		      	= fChain->GetBranch("Jet_Py");	    	    
+  b_Jet_Pz     		      	= fChain->GetBranch("Jet_Pz");	        
+  b_Jet_E	     	      	= fChain->GetBranch("Jet_E");	        
+  b_Jet_btag   		      	= fChain->GetBranch("Jet_btag");	    
+  b_Jet_ID     		      	= fChain->GetBranch("Jet_ID");	    	    
+  b_NMuon	     	      	= fChain->GetBranch("NMuon");	        
+  b_Muon_Px    		      	= fChain->GetBranch("Muon_Px");	    
+  b_Muon_Py    		      	= fChain->GetBranch("Muon_Py");	    
+  b_Muon_Pz    		      	= fChain->GetBranch("Muon_Pz");	    
+  b_Muon_E     		      	= fChain->GetBranch("Muon_E");	    	    
+  b_Muon_Charge		      	= fChain->GetBranch("Muon_Charge");	    
+  b_Muon_Iso   	              	= fChain->GetBranch("Muon_Iso");     
+  b_NElectron     	      	= fChain->GetBranch("NElectron");
+  b_Electron_Px		      	= fChain->GetBranch("Electron_Px");	    
+  b_Electron_Py		      	= fChain->GetBranch("Electron_Py");	    
+  b_Electron_Pz		      	= fChain->GetBranch("Electron_Pz");	    
+  b_Electron_E 		      	= fChain->GetBranch("Electron_E");	    
+  b_Electron_Charge	      	= fChain->GetBranch("Electron_Charge");
+  b_Electron_Iso	      	= fChain->GetBranch("Electron_Iso");	        
+  b_NPhoton    		      	= fChain->GetBranch("NPhoton");	    
+  b_Photon_Px  		      	= fChain->GetBranch("Photon_Px");	    
+  b_Photon_Py  		      	= fChain->GetBranch("Photon_Py");	    
+  b_Photon_Pz  		      	= fChain->GetBranch("Photon_Pz");	    
+  b_Photon_E   		      	= fChain->GetBranch("Photon_E");	    
+  b_Photon_Charge	      	= fChain->GetBranch("Photon_Charge");	        
+  b_Photon_Iso 		      	= fChain->GetBranch("Photon_Iso");	    
+  b_MET_px     		      	= fChain->GetBranch("MET_px");	    	    
+  b_Met_py     		      	= fChain->GetBranch("Met_py");	    	    
   b_MChadronicBottom_px	      	= fChain->GetBranch("MChadronicBottom_px");	        
   b_MChadronicBottom_py	      	= fChain->GetBranch("MChadronicBottom_py");	        
   b_MChadronicBottom_pz	      	= fChain->GetBranch("MChadronicBottom_pz");	        
@@ -323,16 +329,16 @@ bool AnalysisFAEA::Notify(){
   b_MChadronicWDecayQuarkBar_px	= fChain->GetBranch("MChadronicWDecayQuarkBar_px");
   b_MChadronicWDecayQuarkBar_py	= fChain->GetBranch("MChadronicWDecayQuarkBar_py");
   b_MChadronicWDecayQuarkBar_pz	= fChain->GetBranch("MChadronicWDecayQuarkBar_pz");
-  b_MClepton_px		      	= fChain->GetBranch("MClepton_px	");	    
-  b_MClepton_py		      	= fChain->GetBranch("MClepton_py	");	    
-  b_MClepton_pz		      	= fChain->GetBranch("MClepton_pz	");	    
-  b_MClepton_PDGid	      	= fChain->GetBranch("MClepton_PDGid	");	    
-  b_MCneutrino_px	      	= fChain->GetBranch("MCneutrino_px	");	        
-  b_MCneutrino_py	      	= fChain->GetBranch("MCneutrino_py	");	        
-  b_MCneutrino_pz	      	= fChain->GetBranch("MCneutrino_pz	");	        
-  b_NPrimaryVertices	      	= fChain->GetBranch("NPrimaryVertices	");
-  b_triggerIsoMu24	      	= fChain->GetBranch("triggerIsoMu24	");	    
-  b_EventWeight               	= fChain->GetBranch("EventWeight        ");
+  b_MClepton_px		      	= fChain->GetBranch("MClepton_px");	    
+  b_MClepton_py		      	= fChain->GetBranch("MClepton_py");	    
+  b_MClepton_pz		      	= fChain->GetBranch("MClepton_pz");	    
+  b_MClepton_PDGid	      	= fChain->GetBranch("MClepton_PDGid");	    
+  b_MCneutrino_px	      	= fChain->GetBranch("MCneutrino_px");	        
+  b_MCneutrino_py	      	= fChain->GetBranch("MCneutrino_py");	        
+  b_MCneutrino_pz	      	= fChain->GetBranch("MCneutrino_pz");	        
+  b_NPrimaryVertices	      	= fChain->GetBranch("NPrimaryVertices");
+  b_triggerIsoMu24	      	= fChain->GetBranch("triggerIsoMu24");	    
+  b_EventWeight               	= fChain->GetBranch("EventWeight");
 
   return kTRUE;
 
@@ -345,7 +351,7 @@ void AnalysisFAEA::Show(int entry){
   fChain->Show(entry);
 
 }
-void AnalysisFAEA::Cut(int entry){
+int AnalysisFAEA::cut(int entry){
   //This function may be called from loop
   //returns 1 if entry is accepted
   //returns -1 otherwise.
