@@ -144,6 +144,10 @@ class AnalysisFAEA {
   TBranch	       *triggerIsoMu24;		        //!
   TBranch	       *EventWeight;                      //!
 
+
+
+  //================================ Atributes for this class
+  std::vector<TString> Backgrounds;
   //================================ Method Declaration
   //Constructor
   AnalysisFAEA(TTree *tree = 0);
@@ -153,8 +157,9 @@ class AnalysisFAEA {
   int GetEntry(int entry);
   int LoadTree(int entry);
   void Init(TTree *tree);
-  void Loop(float cut);
+  void Loop();
   Bool_t Notify();
+  void SetBackgrounds();
   void Show(int entry = -1);
 };
 #endif
@@ -166,6 +171,7 @@ AnalysisFAEA::AnalysisFAEA(TTree *tree){
     std::cout << "[ERROR]: No rootfile to be read" << std::endl;
 
   }
+  SetBackgrounds();
   Init(tree);
 
 }
@@ -195,7 +201,17 @@ int AnalysisFAEA::LoadTree(int entry){
   }
   return centry;
 }
-
+void SetBackgrounds(){
+  this->Backgrounds.push_back("data");
+  this->Backgrounds.push_back("dy");
+  this->Backgrounds.push_back("qcd");
+  this->Backgrounds.push_back("single_top");
+  this->Backgrounds.push_back("ttbar");
+  this->Backgrounds.push_back("wjets");
+  this->Backgrounds.push_back("ww");
+  this->Backgrounds.push_back("wz");
+  this->Backgrounds.push_back("zz");
+}
 void AnalysisFAEA::Init(TTree *tree){
   //Set branch addresses
   if (tree == 0) return;
