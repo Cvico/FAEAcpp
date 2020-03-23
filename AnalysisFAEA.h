@@ -36,6 +36,10 @@ class AnalysisFAEA {
   public:
   //================================ Atributes for this class
   std::vector<TString> Backgrounds{};
+  float			weight;
+  float			MuonPt;
+  float			MuonEta;
+  float			DiMuonMass;
   TTree			*fChain;
   int			fCurrent;
   //================================Declaration of leaves types

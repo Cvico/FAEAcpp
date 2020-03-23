@@ -36,3 +36,12 @@ void AnalysisFAEA::InitHistos(){
 }
 
 
+void AnalysisFAEA::FillHistograms(){
+
+  MuonPt->Fill(MuonPt, weight);
+  DiMuonMass->Fill(DiMuonMass, weight);
+  NJet->Fill(NJet, weight);
+  MET->Fill(MET, weight);
+  MuonEta->Fill(MuonEta, weight);
+
+}
