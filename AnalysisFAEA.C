@@ -8,7 +8,10 @@
 
 
 void AnalysisFAEA::Loop(std::vector<TString> VectorSamples){
-
+  for (int i = 0; VectorSamples.size(); i++){
+    Loop(VectorSamples.at(i));
+  }
+  return
 }
 void AnalysisFAEA::Loop(TString sample){
 
