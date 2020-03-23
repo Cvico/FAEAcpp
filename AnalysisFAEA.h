@@ -38,6 +38,7 @@ class AnalysisFAEA {
   std::vector<TString> Backgrounds{};
   float			weight;
   float			MuonPt;
+  float			MET;
   float			MuonEta;
   float			DiMuonMass;
   TTree			*fChain;
@@ -156,7 +157,7 @@ class AnalysisFAEA {
 
   //================================ Method Declaration
   //Constructor
-  AnalysisFAEA(TTree *tree = 0);
+  AnalysisFAEA(TString sample = "data");
   //Destructor
   ~AnalysisFAEA();
   int cut(int entry);
@@ -164,6 +165,7 @@ class AnalysisFAEA {
   int LoadTree(int entry);
   void Init(TTree *tree);
   void InitHistos();
+  void FillHistograms();
   void Loop(TString sample);
   void Loop(std::vector<TString> VectorSamples);
   Bool_t Notify();
@@ -175,16 +177,13 @@ class AnalysisFAEA {
 #endif
 //====================== Method Implementation
 #ifdef AnalysisFAEA_cxx
-AnalysisFAEA::AnalysisFAEA(TTree *tree){
-    if (tree == 0) {
-    TChain* chain = new TChain("events", "");
-    for (int i = 0; i < Backgrounds.size(); i++){
-      chain->Add(Backgrounds.at(i) + ".root/events");
-    }
-    tree = chain;
-  }
-  Init(tree);
-  Loop();
+AnalysisFAEA::AnalysisFAEA(TString sample){
+  TString datapath = "../files";
+  TFile *f = new TFile(datapath + sample + ".root");
+  TTree *T = (TTree*)gROOT->FindObject("events");
+  Init(T);
+  InitHistos();
+  Loop("dy");
 }
 
 AnalysisFAEA::~AnalysisFAEA(){
