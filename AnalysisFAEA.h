@@ -159,6 +159,7 @@ class AnalysisFAEA {
   int GetEntry(int entry);
   int LoadTree(int entry);
   void Init(TTree *tree);
+  void InitHistos();
   void Loop();
   Bool_t Notify();
   void SetBackgrounds();

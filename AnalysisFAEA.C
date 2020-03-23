@@ -8,8 +8,11 @@
 
 
 void AnalysisFAEA::Loop(){
-  //Main method for AnalysisFAEA
-  //First we set the path where to read the rootfiles
+
+  //First we need to create the histograms for the analysis
+  InitHistos();
+
+
   TString Datapath = "../files/";
 
   for(int i = 0; i < Backgrounds.size(); i++){
@@ -18,4 +21,18 @@ void AnalysisFAEA::Loop(){
   
     
 }
+
+
+
+void AnalysisFAEA::InitHistos(){
+  //Some debug output
+  std::cout << "[INFO]Creating histograms for the analysis..." << std::endl;
+  TH1F* MuonPt = new TH1F("_MuonPt", "", 20, 0, 200);
+  TH1F* DiMuonMass = new TH1F("_DiMuonMass", "", 20, 0, 200);
+  TH1F* NJet = new TH1F("_NJet", "", 10, 0, 10);
+  TH1F* MET = new TH1F("_MET", "", 30, 0, 200);
+  TH1F* MuonEta = new TH1F("_MuonEta", 20, -3, 3);
+  
+}
+
 
