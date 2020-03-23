@@ -164,7 +164,8 @@ class AnalysisFAEA {
   int LoadTree(int entry);
   void Init(TTree *tree);
   void InitHistos();
-  void Loop();
+  void Loop(TString sample);
+  void Loop(std::vector<TString> VectorSamples);
   Bool_t Notify();
   void SetBackgrounds();
   void Show(int entry = -1);
@@ -175,9 +176,7 @@ class AnalysisFAEA {
 //====================== Method Implementation
 #ifdef AnalysisFAEA_cxx
 AnalysisFAEA::AnalysisFAEA(TTree *tree){
-  SetBackgrounds();
-  // std::vector <TString> Backgrounds{"data", "dy"};
-  if (tree == 0) {
+    if (tree == 0) {
     TChain* chain = new TChain("events", "");
     for (int i = 0; i < Backgrounds.size(); i++){
       chain->Add(Backgrounds.at(i) + ".root/events");

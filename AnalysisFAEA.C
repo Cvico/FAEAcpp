@@ -7,18 +7,16 @@
 #include "AnalysisFAEA.h"
 
 
-void AnalysisFAEA::Loop(){
+void AnalysisFAEA::Loop(std::vector<TString> VectorSamples){
+
+}
+void AnalysisFAEA::Loop(TString sample){
 
   //First we need to create the histograms for the analysis
   InitHistos();
 
 
   TString Datapath = "../files/";
-
-  for(int i = 0; i < Backgrounds.size(); i++){
-     std::cout << "Background: " << Backgrounds.at(i) << std::endl;
-  }
-  
     
 }
 
