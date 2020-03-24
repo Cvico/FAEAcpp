@@ -22,26 +22,25 @@ void AnalysisFAEA::Loop(TString sample){
 }
 
 
+void AnalysisFAEA::FillHistograms(){
+
+  h_MuonPt->Fill(MuonPt, weight);
+  h_DiMuonMass->Fill(DiMuonMass, weight);
+  h_NJet->Fill(NJet, weight);
+  h_MET->Fill(MET, weight);
+  h_MuonEta->Fill(MuonEta, weight);
+
+}
 
 void AnalysisFAEA::InitHistos(){
   //Some debug output
   std::cout << "[INFO]Creating histograms for the analysis..." << std::endl;
-  TH1F* MuonPt = new TH1F("_MuonPt", "", 20, 0, 200);
-  TH1F* DiMuonMass = new TH1F("_DiMuonMass", "", 20, 0, 200);
-  TH1F* NJet = new TH1F("_NJet", "", 10, 0, 10);
-  TH1F* MET = new TH1F("_MET", "", 30, 0, 200);
-  TH1F* MuonEta = new TH1F("_MuonEta","", 20, -3, 3);
+  TH1F* h_MuonPt = new TH1F("h_MuonPt", "", 20, 0, 200);
+  TH1F* h_DiMuonMass = new TH1F("h_DiMuonMass", "", 20, 0, 200);
+  TH1F* h_NJet = new TH1F("h_NJet", "", 10, 0, 10);
+  TH1F* h_MET = new TH1F("h_MET", "", 30, 0, 200);
+  TH1F* h_MuonEta = new TH1F("h_MuonEta","", 20, -3, 3);
   
 }
 
-/*
-void AnalysisFAEA::FillHistograms(){
 
-  MuonPt->Fill(MuonPt, weight);
-  DiMuonMass->Fill(DiMuonMass, weight);
-  NJet->Fill(NJet, weight);
-  MET->Fill(MET, weight);
-  MuonEta->Fill(MuonEta, weight);
-
-}
-*/
