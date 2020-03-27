@@ -22,24 +22,31 @@ void AnalysisFAEA::Loop(TString sample){
     TFile * fOut = new TFile(Outpath + "histograms.root", "recreate");
     
     //Iterate over all events
-    int nevents = Tree->GetEntries(); 
+    int nevents = Tree->GetEntries();
+    std::cout << nevents << std::endl;
     for (int event = 0; event<nevents; event++){
         GetEntry(event);
         if(event%1000 == 0){std::cout << "Analizando..." << std::endl;}
-        TLorentzVector *Muon1 = new TLorentzVector();
-        Muon1->SetPxPyPzE(Muon_Px[0], Muon_Py[0], Muon_Pz[0], Muon_E[0]);
+        //TLorentzVector *Muon1 = new TLorentzVector();
+        //Muon1->SetPxPyPzE(Muon_Px[0], Muon_Py[0], Muon_Pz[0], Muon_E[0]);
         
         
-        MuonPt = float(Muon1->Pt());
-        MuonEta = float(Muon1->Eta());
+        //MuonPt = float(Muon1->Pt());
+        //MuonEta = float(Muon1->Eta());
+        MuonPt = 1;
+        MuonEta = 1;
         MET = (MET_px * MET_px + MET_py * MET_py);
         
-        
-        delete Muon1;
+        //delete Muon1;
     }
     
+    fOut->Close();
     delete fOut;
+    std::cout << "File output deleted" << std::endl;
+    return;
+    
 }
+
 
 
 void AnalysisFAEA::InitHistos(){
