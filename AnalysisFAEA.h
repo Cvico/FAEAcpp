@@ -178,18 +178,24 @@ AnalysisFAEA::AnalysisFAEA(TString Sample){
   std::cout << "Analysis for " << Sample << " MC sample..." << std::endl;
   //Open datapath and extract its tree
   TString datapath = "../files/";
-  TFile *f = new TFile(datapath + Sample + ".root");
-  this->Tree = (TTree*)gROOT->FindObject("events");
+  TFile *f = new TFile(datapath + Sample + ".root", "read");
+  f->GetObject("events",this->Tree);
+  
+  //Tree = (TTree*)gROOT->FindObject("events");
+  //this->Tree = (TTree *)f->Get("events");
   //Give it to the second constructor
   AnalysisFAEA(this->Tree);
-  delete this->Tree;
-  delete f;
+  std::cout << "Hello there";
+  //delete Tree;
+  //f->Close();
+  //delete f;
 }
 
 AnalysisFAEA::AnalysisFAEA(TTree *Tree){
   Init(Tree);
   InitHistos();
   Loop("dy");
+  std::cout << "heeeey" << std::endl;
 }
 
 AnalysisFAEA::~AnalysisFAEA(){
