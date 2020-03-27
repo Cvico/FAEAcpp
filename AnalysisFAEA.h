@@ -50,29 +50,28 @@ class AnalysisFAEA {
   float			Jet_E;			     
   std::vector<float>	Jet_btag;		     
   std::vector<float>	Jet_ID;			     
-  int			NMuon;			     
+  int			        NMuon;			     
   std::vector<float>	Muon_Px;		     
   std::vector<float>	Muon_Py;		     
   std::vector<float>	Muon_Pz;		     
-  std::vector<float>	Muon_E;			     
-  int			Muon_Charge;		     
+  std::vector<float>   	Muon_E;			     
+  int			        Muon_Charge;		     
   std::vector<float>	Muon_Iso;		     
-  int			NElectron;		     
+  int			        NElectron;		     
   std::vector<float>    Electron_Px;		     
   std::vector<float>	Electron_Py;		     
   std::vector<float>	Electron_Pz;		     
   std::vector<float>	Electron_E;		     
-  int			Electron_Charge;	     
+  int			        Electron_Charge;	     
   std::vector<float>	Electron_Iso;		     
-  int			NPhoton;		     
+  int			        NPhoton;		     
   std::vector<float>    Photon_Px;		     
   std::vector<float>	Photon_Py;		     
   std::vector<float>	Photon_Pz;		     
   std::vector<float>	Photon_E;		     
-  int			Photon_Charge;		     
   std::vector<float>	Photon_Iso;		     
-  std::vector<float>	MET_px;			     
-  std::vector<float>	Met_py;			     
+  float	                MET_px;			     
+  float	                MET_py;			     
   float			MChadronicBottom_px;	     
   float			MChadronicBottom_py;	     
   float			MChadronicBottom_pz;	     
@@ -88,7 +87,7 @@ class AnalysisFAEA {
   float			MClepton_px;		     
   float			MClepton_py;		     
   float			MClepton_pz;		     
-  int			MClepton_PDGid;		     
+  int			MCleptonPDGid;		     
   float			MCneutrino_px;		     
   float			MCneutrino_py;		     
   float			MCneutrino_pz;		     
@@ -126,10 +125,9 @@ class AnalysisFAEA {
   TBranch	       *b_Photon_Py;		   	     //!
   TBranch	       *b_Photon_Pz;		   	     //!
   TBranch	       *b_Photon_E;		   	     //!
-  TBranch	       *b_Photon_Charge;		   	     //!
   TBranch	       *b_Photon_Iso;		   	     //!
   TBranch	       *b_MET_px;			        //!
-  TBranch	       *b_Met_py;			        //!
+  TBranch	       *b_MET_py;			        //!
   TBranch	       *b_MChadronicBottom_px;	        //!
   TBranch	       *b_MChadronicBottom_py;	        //!
   TBranch	       *b_MChadronicBottom_pz;	        //!
@@ -145,7 +143,7 @@ class AnalysisFAEA {
   TBranch	       *b_MClepton_px;		        //!
   TBranch	       *b_MClepton_py;		        //!
   TBranch	       *b_MClepton_pz;		        //!
-  TBranch	       *b_MClepton_PDGid;		        //!
+  TBranch	       *b_MCleptonPDGid;		        //!
   TBranch	       *b_MCneutrino_px;		        //!
   TBranch	       *b_MCneutrino_py;		        //!
   TBranch	       *b_MCneutrino_pz;		        //!
@@ -179,7 +177,7 @@ class AnalysisFAEA {
 AnalysisFAEA::AnalysisFAEA(TString Sample){
   std::cout << "Analysis for " << Sample << " MC sample..." << std::endl;
   //Open datapath and extract its tree
-  TString datapath = "../files";
+  TString datapath = "../files/";
   TFile *f = new TFile(datapath + Sample + ".root");
   this->Tree = (TTree*)gROOT->FindObject("events");
   //Give it to the second constructor
@@ -245,10 +243,9 @@ void AnalysisFAEA::Init(TTree *tree){
   Tree->SetBranchAddress("Photon_Py",& Photon_Py )						;
   Tree->SetBranchAddress("Photon_Pz",& Photon_Pz )						;
   Tree->SetBranchAddress("Photon_E",& Photon_E )						;
-  Tree->SetBranchAddress("Photon_Charge",&Photon_Charge )					;
   Tree->SetBranchAddress("Photon_Iso",&Photon_Iso )						;
   Tree->SetBranchAddress("MET_px",&MET_px )							;
-  Tree->SetBranchAddress("Met_pz",&Met_py )							;
+  Tree->SetBranchAddress("MET_py",&MET_py )							;
   Tree->SetBranchAddress("MChadronicBottom_px",&MChadronicBottom_px )			;
   Tree->SetBranchAddress("MChadronicBottom_py",&MChadronicBottom_py )			;
   Tree->SetBranchAddress("MChadronicBottom_pz",&MChadronicBottom_pz )			;
@@ -264,7 +261,7 @@ void AnalysisFAEA::Init(TTree *tree){
   Tree->SetBranchAddress("MClepton_px",&MClepton_px )					;
   Tree->SetBranchAddress("MClepton_py",&MClepton_py )					;
   Tree->SetBranchAddress("MClepton_pz",&MClepton_pz )					;
-  Tree->SetBranchAddress("MClepton_PDGid",&MClepton_PDGid )					;
+  Tree->SetBranchAddress("MCleptonPDGid",&MCleptonPDGid )					;
   Tree->SetBranchAddress("MCneutrino_px",&MCneutrino_px )					;
   Tree->SetBranchAddress("MCneutrino_py",&MCneutrino_py )					;
   Tree->SetBranchAddress("MCneutrino_pz",&MCneutrino_pz )					;
@@ -304,10 +301,9 @@ bool AnalysisFAEA::Notify(){
   b_Photon_Py  		      	= Tree->GetBranch("Photon_Py");	    
   b_Photon_Pz  		      	= Tree->GetBranch("Photon_Pz");	    
   b_Photon_E   		      	= Tree->GetBranch("Photon_E");	    
-  b_Photon_Charge	      	= Tree->GetBranch("Photon_Charge");	        
   b_Photon_Iso 		      	= Tree->GetBranch("Photon_Iso");	    
   b_MET_px     		      	= Tree->GetBranch("MET_px");	    	    
-  b_Met_py     		      	= Tree->GetBranch("Met_py");	    	    
+  b_MET_py     		      	= Tree->GetBranch("MET_py");	    	    
   b_MChadronicBottom_px	      	= Tree->GetBranch("MChadronicBottom_px");	        
   b_MChadronicBottom_py	      	= Tree->GetBranch("MChadronicBottom_py");	        
   b_MChadronicBottom_pz	      	= Tree->GetBranch("MChadronicBottom_pz");	        
@@ -323,7 +319,7 @@ bool AnalysisFAEA::Notify(){
   b_MClepton_px		      	= Tree->GetBranch("MClepton_px");	    
   b_MClepton_py		      	= Tree->GetBranch("MClepton_py");	    
   b_MClepton_pz		      	= Tree->GetBranch("MClepton_pz");	    
-  b_MClepton_PDGid	      	= Tree->GetBranch("MClepton_PDGid");	    
+  b_MCleptonPDGid	      	= Tree->GetBranch("MCleptonPDGid");	    
   b_MCneutrino_px	      	= Tree->GetBranch("MCneutrino_px");	        
   b_MCneutrino_py	      	= Tree->GetBranch("MCneutrino_py");	        
   b_MCneutrino_pz	      	= Tree->GetBranch("MCneutrino_pz");	        
