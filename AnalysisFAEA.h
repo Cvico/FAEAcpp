@@ -191,7 +191,7 @@ AnalysisFAEA::AnalysisFAEA(TString Sample){
 AnalysisFAEA::AnalysisFAEA(TTree *Tree){
   Init(Tree);
   InitHistos();
-  // Loop("dy");
+  Loop("dy");
 }
 
 AnalysisFAEA::~AnalysisFAEA(){

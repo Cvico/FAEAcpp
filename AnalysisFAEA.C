@@ -15,22 +15,9 @@ void AnalysisFAEA::Loop(std::vector<TString> VectorSamples){
 }
 */
 void AnalysisFAEA::Loop(TString sample){
-  
-  //First we need to create the histograms for the analysis
-  InitHistos();
-  std::cout << "Histos initialized" << std::endl;
-}
-
-
-void AnalysisFAEA::FillHistograms(){
-
-  h_MuonPt->Fill(MuonPt, weight);
-  h_DiMuonMass->Fill(DiMuonMass, weight);
-  h_NJet->Fill(NJet, weight);
-  h_MET->Fill(MET, weight);
-  h_MuonEta->Fill(MuonEta, weight);
 
 }
+
 
 void AnalysisFAEA::InitHistos(){
   //Some debug output
@@ -44,3 +31,13 @@ void AnalysisFAEA::InitHistos(){
 }
 
 
+
+void AnalysisFAEA::FillHistograms(){
+
+  ((TH1F*)gROOT->FindObject("h_MuonPt"))->Fill(MuonPt, weight);
+  ((TH1F*)gROOT->FindObject("h_DiMuonMass"))->Fill(DiMuonMass, weight);
+  ((TH1F*)gROOT->FindObject("h_NJet"))->Fill(NJet, weight);
+  ((TH1F*)gROOT->FindObject("h_MET"))->Fill(MET, weight);
+  ((TH1F*)gROOT->FindObject("h_MuonEta"))->Fill(MuonEta, weight);
+
+}
