@@ -30,6 +30,7 @@
 //================= C++ includes =================
 #include <vector>
 #include <iostream>
+#include "auxiliar.C"
 
 class AnalysisFAEA {
   
@@ -160,7 +161,7 @@ class AnalysisFAEA {
 
   //================================ Method Declaration
   //Constructor
-  AnalysisFAEA(TString Sample); //Overloaded constructor
+  AnalysisFAEA(const std::string Input); //Overloaded constructor
   //Destructor
   ~AnalysisFAEA();
   int cut(int entry);
@@ -181,15 +182,21 @@ class AnalysisFAEA {
 //====================== Method Implementation
 #ifdef AnalysisFAEA_cxx
 
-AnalysisFAEA::AnalysisFAEA(TString Sample){
-  std::cout << "Analysis for " << Sample << " MC sample..." << std::endl;
-  //Open datapath and extract its tree
-  TString datapath = "../files/";
-  TFile *f = new TFile(datapath + Sample + ".root", "read");
-  Tree = (TTree*)gROOT->FindObject("events");
-  Init(Tree);
-  InitHistos();
-  Loop("dy");
+AnalysisFAEA::AnalysisFAEA(const std::string Input){
+  std::vector<TString> Samples = TStringToVector(Input);
+  TString datapath = "../files/"; 
+  
+  for (int sample = 0; sample < Samples.size(); sample++){
+    std::cout << "Analysis for " << Samples.at(sample) << " MC sample..." << std::endl;
+    //Open datapath and extract its tree
+    TFile *f = new TFile(datapath + Samples.at(sample) + ".root", "read");
+    Tree = (TTree*)gROOT->FindObject("events");
+    Init(Tree);
+    InitHistos();
+    Loop(Samples.at(sample));
+    delete f;
+  }
+ 
 }
 
 AnalysisFAEA::~AnalysisFAEA(){
