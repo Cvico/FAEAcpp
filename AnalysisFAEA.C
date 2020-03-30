@@ -48,18 +48,20 @@ void AnalysisFAEA::Loop(TString sample){
 void AnalysisFAEA::InitHistos(){
   //Some debug output
   std::cout << "[INFO]Creating histograms for the analysis..." << std::endl;
-  TH1F* h_MuonPt = new TH1F("h_MuonPt", "", 20, 0, 200);
-  TH1F* h_NJet = new TH1F("h_NJet", "", 10, 0, 10);
-  TH1F* h_MET = new TH1F("h_MET", "", 30, 0, 200);
-  TH1F* h_MuonEta = new TH1F("h_MuonEta","", 20, -3, 3);
+  h_MuonPt = new TH1F("h_MuonPt", "", 20, 0, 200);
+  h_NJet = new TH1F("h_NJet", "", 10, 0, 10);
+  h_MET = new TH1F("h_MET", "", 30, 0, 200);
+  h_MuonEta = new TH1F("h_MuonEta","", 20, -3, 3);
   
-  h_MuonPt->SetDirectory(0);
   return;
 }
 
 
 
 void AnalysisFAEA::FillHistograms(){
-        
+  h_MuonPt->Fill(MuonPt, weight);
+  h_NJet->Fill(NJet, weight);
+  h_MET->Fill(MET, weight);
+  h_MuonEta->Fill(MuonEta, weight);
 
 }

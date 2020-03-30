@@ -34,6 +34,12 @@
 class AnalysisFAEA {
   
   public:
+      
+  //================================ Histograms to be filled
+  TH1F          *h_MuonPt;
+  TH1F          *h_NJet;
+  TH1F          *h_MET;
+  TH1F          *h_MuonEta;
   //================================ Atributes for this class
   float			weight;
   float			MuonPt;
