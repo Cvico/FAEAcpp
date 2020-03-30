@@ -41,6 +41,7 @@ class AnalysisFAEA {
   TH1F          *h_MET;
   TH1F          *h_MuonEta;
   //================================ Atributes for this class
+  TFile         *fOut; //File to store histograms
   float			weight;
   float			MuonPt;
   float			MET;
@@ -166,6 +167,7 @@ class AnalysisFAEA {
   int cut(int entry);
   int GetEntry(int entry);
   int LoadTree(int entry);
+  void WriteHistograms();
   void Init(TTree *tree);
   void InitHistos();
   void FillHistograms();

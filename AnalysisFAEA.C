@@ -19,7 +19,7 @@ void AnalysisFAEA::Loop(TString sample){
     TString  Outpath = "../results/";
     gSystem->MakeDirectory(Outpath);
     //Create a rootfile where the histograms will be stored
-    TFile * fOut = new TFile(Outpath + "histograms.root", "recreate");
+    fOut = new TFile(Outpath + "histograms.root", "recreate");
     
     //Iterate over all events
     int nevents = Tree->GetEntries();
@@ -36,7 +36,7 @@ void AnalysisFAEA::Loop(TString sample){
         FillHistograms();
         //delete Muon1;
     }
-    
+    WriteHistograms();
     fOut->Close();
     delete fOut;
     return;
@@ -64,4 +64,14 @@ void AnalysisFAEA::FillHistograms(){
   h_MET->Fill(MET, weight);
   h_MuonEta->Fill(MuonEta, weight);
 
+}
+
+void AnalysisFAEA::WriteHistograms(){
+  fOut->cd();
+  
+  h_MuonPt->Write();
+  h_NJet->Write();
+  h_MET->Write();
+  h_MuonEta->Write();
+    
 }
