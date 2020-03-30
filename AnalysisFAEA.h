@@ -35,7 +35,6 @@ class AnalysisFAEA {
   
   public:
   //================================ Atributes for this class
-  std::vector<TString> Backgrounds{};
   float			weight;
   float			MuonPt;
   float			MET;
@@ -48,28 +47,28 @@ class AnalysisFAEA {
   float			Jet_Py;			     
   float			Jet_Pz;			     
   float			Jet_E;			     
-  std::vector<float>	Jet_btag;		     
-  std::vector<float>	Jet_ID;			     
+  float	        Jet_btag[20];		     
+  float	        Jet_ID[20];			     
   int			        NMuon;			     
-  std::vector<float>	Muon_Px;		     
-  std::vector<float>	Muon_Py;		     
-  std::vector<float>	Muon_Pz;		     
-  std::vector<float>   	Muon_E;			     
+  float	                Muon_Px[20];		     
+  float	                Muon_Py[20]; 		     
+  float	                Muon_Pz[20]; 		     
+  float   	            Muon_E[20]; 			     
   int			        Muon_Charge;		     
-  std::vector<float>	Muon_Iso;		     
+  float             	Muon_Iso[10];		     
   int			        NElectron;		     
-  std::vector<float>    Electron_Px;		     
-  std::vector<float>	Electron_Py;		     
-  std::vector<float>	Electron_Pz;		     
-  std::vector<float>	Electron_E;		     
+  float                 Electron_Px[10];		     
+  float	                Electron_Py[10];		     
+  float	                Electron_Pz[10];		     
+  float	                Electron_E[10];		     
   int			        Electron_Charge;	     
-  std::vector<float>	Electron_Iso;		     
+  float	                Electron_Iso[10];		     
   int			        NPhoton;		     
-  std::vector<float>    Photon_Px;		     
-  std::vector<float>	Photon_Py;		     
-  std::vector<float>	Photon_Pz;		     
-  std::vector<float>	Photon_E;		     
-  std::vector<float>	Photon_Iso;		     
+  float                 Photon_Px[10];		     
+  float             	Photon_Py[10];		     
+  float	                Photon_Pz[10];		     
+  float             	Photon_E[10];		     
+  float             	Photon_Iso[10];		     
   float	                MET_px;			     
   float	                MET_py;			     
   float			MChadronicBottom_px;	     
