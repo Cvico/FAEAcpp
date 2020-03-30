@@ -161,7 +161,6 @@ class AnalysisFAEA {
   //================================ Method Declaration
   //Constructor
   AnalysisFAEA(TString Sample); //Overloaded constructor
-  AnalysisFAEA(TTree *Tree);
   //Destructor
   ~AnalysisFAEA();
   int cut(int entry);
@@ -181,6 +180,7 @@ class AnalysisFAEA {
 #endif
 //====================== Method Implementation
 #ifdef AnalysisFAEA_cxx
+
 AnalysisFAEA::AnalysisFAEA(TString Sample){
   std::cout << "Analysis for " << Sample << " MC sample..." << std::endl;
   //Open datapath and extract its tree
