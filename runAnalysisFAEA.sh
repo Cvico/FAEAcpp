@@ -6,6 +6,6 @@ for f in $DATAPATH
 	do
 		sample=${f:9:-5}
 		echo $sample
-		root -l -b 'AnalysisFAEA.C("$sample")' 
+		root -l -b -q 'AnalysisFAEA.C("$sample")' 
 	done
 

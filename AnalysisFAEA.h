@@ -161,7 +161,7 @@ class AnalysisFAEA {
 
   //================================ Method Declaration
   //Constructor
-  AnalysisFAEA(const std::string Input); //Overloaded constructor
+  AnalysisFAEA(TString Sample = "data"); //Overloaded constructor
   //Destructor
   ~AnalysisFAEA();
   int cut(int entry);
@@ -171,7 +171,7 @@ class AnalysisFAEA {
   void Init(TTree *tree);
   void InitHistos();
   void FillHistograms();
-  void Loop(TString sample = "ttbar");
+  void Loop(TString sample);
   void Loop(std::vector<TString> VectorSamples);
   Bool_t Notify();
   void Show(int entry = -1);
@@ -182,21 +182,15 @@ class AnalysisFAEA {
 //====================== Method Implementation
 #ifdef AnalysisFAEA_cxx
 
-AnalysisFAEA::AnalysisFAEA(const std::string Input){
-  std::vector<TString> Samples = TStringToVector(Input);
+AnalysisFAEA::AnalysisFAEA(TString Sample){
   TString datapath = "../files/"; 
-  
-  for (int sample = 0; sample < Samples.size(); sample++){
-    std::cout << "Analysis for " << Samples.at(sample) << " MC sample..." << std::endl;
-    //Open datapath and extract its tree
-    TFile *f = new TFile(datapath + Samples.at(sample) + ".root", "read");
-    Tree = (TTree*)gROOT->FindObject("events");
-    Init(Tree);
-    InitHistos();
-    Loop(Samples.at(sample));
-    delete f;
-  }
- 
+  //Open datapath and extract its tree
+  TFile *f = new TFile(datapath + Sample + ".root", "read");
+  Tree = (TTree*)gROOT->FindObject("events");
+  Init(Tree);
+  InitHistos();
+  Loop(Sample);
+  delete f;
 }
 
 AnalysisFAEA::~AnalysisFAEA(){
